@@ -6,3 +6,4 @@ This is a repository of scripts I use to set up dev computers and servers quickl
 * svnalises.md -- svn reconciliation aliases (Makes it easier to bulk delete/add/commit modifications, zsh and filesystem changes)
 * ubuntuKickStart.sh -- Ubuntu server setup script (Sets up nginx, mysql, php, aws, etc)
 * TC.terminal -- Classy-ass shell theme that goes nicely with zsh
+* Gruntfile.js -- Sample Gruntfile that uses my most frequently used procedures
