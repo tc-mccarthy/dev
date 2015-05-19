@@ -39,5 +39,9 @@ echo "Install grunt"
 sudo npm install -g grunt-cli
 clear
 
+echo "Install express"
+sudo npm install -g express-generator
+clear
+
 brew doctor
 echo "Install complete!"
