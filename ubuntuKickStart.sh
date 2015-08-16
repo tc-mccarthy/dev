@@ -16,51 +16,6 @@ apt-get -qy update && apt-get -qy upgrade
 add-apt-repository ppa:nginx/stable ##latest nginx version
 
 apt-get -y install screen vim ssh nginx mysql-server php5-fpm php5-curl php5-mysql php5-gd build-essential libcurl4-openssl-dev libxml2-dev libfuse-dev comerr-dev libfuse2 libidn11-dev libkrb5-dev libldap2-dev libselinux1-dev libsepol1-dev pkg-config php-apc memcached php5-memcached htop postfix unzip
-#### DO WE NEED TO INSTALL S3 SUPPORT? ####
-clear
-echo 'Basics installation complete.';
-echo "Should I install S3FS so we can mount an S3 bucket locally? [Y/N]";
-read getS3
-
-while [[ ! $getS3 =~ ^('Y'|'y'|'N'|'n')$ ]]; do
-       echo 'Invalid input';
-       echo "Should I install S3FS so we can mount an S3 bucket locally? [Y/N]";
-       read getS3
-done;
-
-### IF S3FS IS OPTED ###
-
-if [ $getS3 = 'Y' ] || [ $getS3 = 'y' ]; then
-    ### Block for S3FS setup ###
-    clear
-    echo 'Installing S3FS';
-    wget http://s3fs.googlecode.com/files/s3fs-1.61.tar.gz
-    tar xvf s3fs-1.61.tar.gz
-    s3fs-1.61/configure --prefix=/usr
-    make
-    sudo make install
-    clear
-    echo 'S3FS install complete';
-    echo 'Do you want to set up the S3 Keys now? [Y/N]';
-    read setupS3
-
-    while [[ ! $setupS3 =~ ^('Y'|'y'|'N'|'n')$ ]]; do
-           echo 'Invalid input';
-           echo 'Do you want to set up the S3 Keys now? [Y/N]';
-           read setupS3
-    done;
-    
-    if [ $setupS3 = 'Y' ] || [ $setupS3 = 'y' ]; then
-          echo 'Access Key ID:';
-          read accessKey
-          echo 'Secret Key:';
-          read secretKey
-          echo $accessKey':'$secretKey > /etc/passwd-s3fs 
-          chmod 600 /etc/passwd-s3fs
-          
-    fi ## end if setupS3
-    
-fi ## end if getS3
 
 ### CUSTOMIZATIONS ###
 clear
