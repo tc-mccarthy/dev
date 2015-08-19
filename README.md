@@ -8,3 +8,4 @@ This is a repository of scripts I use to set up dev computers and servers quickl
 * TC.terminal -- Classy-ass shell theme that goes nicely with zsh
 * Gruntfile.js -- Sample Gruntfile that uses my most frequently used procedures
 * Grunt shell -- Sample file structure for grunt-powered projects
+* nginx -- A robust config shell for my favorite webserver/proxy

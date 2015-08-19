@@ -1,0 +1,20 @@
+server {
+	listen 80 default_server;
+    server_name _;
+	root /path/to/doc/root; ## the path to the wordpress install
+
+	index index.php;
+	access_log /var/log/nginx/WPINSTALLNAME-access.log;
+	error_log /var/log/nginx/WPINSTALLNAME-error.log;
+
+	include global/restrictions.conf;
+
+	#TCS3 hard redirects (if in use)
+	#set $cdnURL http://cdn.totalcomputersusa.com/managed;
+    #rewrite ^/tcS3_media/(.+)$ $cdnURL/$1 permanent;
+
+    # Additional rules go here.
+
+	# Wordpress globals
+	include global/wordpress.conf;
+}
