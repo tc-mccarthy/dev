@@ -12,10 +12,13 @@
 apt-get -qy update && apt-get -qy upgrade
 
 #### THEN INSTALL THE BASICS ####
-
-add-apt-repository ppa:nginx/stable ##latest nginx version
-
 apt-get -y install screen vim ssh nginx mysql-server php5-fpm php5-curl php5-mysql php5-gd build-essential libcurl4-openssl-dev libxml2-dev libfuse-dev comerr-dev libfuse2 libidn11-dev libkrb5-dev libldap2-dev libselinux1-dev libsepol1-dev pkg-config php-apc memcached php5-memcached htop postfix unzip
+
+##install easy engine
+wget -qO ee rt.cx/ee && sudo bash ee 
+
+##set up the initial EE site to load all dependencies
+ee site create eesetup --wpfc
 
 ### CUSTOMIZATIONS ###
 clear
