@@ -6,6 +6,7 @@ server {
     error_log /var/log/nodejs/APPNAME.error.log;
 
     ##tell us where this node app lives
+    root /path/to/express/public;
     set $application_address http://127.0.0.1:3005;
 
     include global/restrictions.conf;
