@@ -1,0 +1,19 @@
+server {
+    listen 80;
+
+    server_name APPLICATION URL;
+    access_log /var/log/nodejs/APPNAME.access.log;
+    error_log /var/log/nodejs/APPNAME.error.log;
+
+    ##tell us where this node app lives
+    set $application_address http://127.0.0.1:3005;
+
+    include global/restrictions.conf;
+
+    # Additional rules go here.
+
+    # Wordpress globals
+    include global/site_rules.conf;
+    include global/node.conf;
+
+}
