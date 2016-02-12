@@ -15,4 +15,5 @@ This is a repository of scripts I use to set up dev computers and servers quickl
 ##Coding/Dev
 * Gruntfile.js -- Sample Gruntfile that uses my most frequently used procedures
 * Grunt shell -- Sample file structure for grunt-powered projects
+* Lib/js/thelper -- light JS library that adds some frequently used functionality
 
