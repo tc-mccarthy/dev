@@ -8,23 +8,24 @@
 ###################################################################################
  
 TIMESTAMP=$(date +"%F")
-BACKUP_DIR="~/backup/$TIMESTAMP"
-S3_PATH="s3://BUCKET_NAME/db/$TIMESTAMP/ENV_OR_SERVER"
+BACKUP_DIR="$HOME/backup/$TIMESTAMP"
+S3_PATH="s3://totalcomps_backups/db/$TIMESTAMP/local"
+MYSQL_USER= #MySQL username
+MYSQL_PASS= #MySQL password
+aws=/usr/local/bin/aws #full path to AWS CLI binary
 
-clear
 echo "Creating backup directory"
 mkdir -p $BACKUP_DIR
  
-databases=`mysql -u $MYSQL_USER -p$MYSQL_PASS -e "SHOW DATABASES;" | grep -Ev "(Database|information_schema|performance_schema)"`
+databases=`mysql -u $MYSQL_USER -p$MYSQL_PASS -e "SHOW DATABASES;" | grep -Ev "(Database|information_schema|performance_schema|mysql)"`
  
 for db in $databases; do
 	echo "Backing up $db"
 	mysqldump --force --opt --user=$MYSQL_USER -p$MYSQL_PASS --databases $db | gzip > "$BACKUP_DIR/$db.gz"
 done
 
-clear
 echo "Syncing to S3"
-aws s3 sync --delete $BACKUP_DIR $S3_PATH
+$aws s3 sync --delete $BACKUP_DIR $S3_PATH
 
 echo "Remove local backup directory"
 rm -Rf $BACKUP_DIR
