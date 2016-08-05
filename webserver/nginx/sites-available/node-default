@@ -17,7 +17,7 @@ server {
 
     # Additional rules go here.
 
-    # Wordpress globals
+    # Node globals
     include global/site_rules.conf;
     include global/node.conf;
 
