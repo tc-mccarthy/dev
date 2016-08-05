@@ -8,6 +8,8 @@ server {
     ##tell us where this node app lives
     root /path/to/express/public;
 
+    resolver 8.8.8.8;
+
     ## local URL that we should reverse proxy to
     set $application_address http://127.0.0.1:3005;
 
