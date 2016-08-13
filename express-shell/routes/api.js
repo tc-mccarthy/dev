@@ -3,6 +3,6 @@ var express = require('express'),
     c = require(__dirname + "/../controllers/index.js").controllers;
 
 /* GET home page. */
-router.get('/', c.app.main);
+router.get('/', c.api.main);
 
 module.exports = router;
