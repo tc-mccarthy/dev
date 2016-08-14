@@ -19,7 +19,9 @@ var Base = function(table) {
                 limit: 1
             };
 
-        db.get(data, cb);
+        db.get(data, function(results) {
+            cb(results[0]);
+        });
     };
 
     this.findAll = function(x, cb) {

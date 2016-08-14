@@ -1,11 +1,34 @@
 /* LINKS CONTROLLERS TO ROUTES FOR FULL MVC STRUCTURE */
+var _ = require("lodash"),
+    models = {
+        list: {
+            user: __dirname + "/user.js"
+        },
+        autoLoad: function() {
+            var _this = this,
+                models = Object.keys(_this.list),
+                list = {};
 
-var models = {
-    user: require(__dirname + "/user.js").model,
-    // organization: require(__dirname + "/organization.js").model,
-    // lobbyist: require(__dirname + "/lobbyist.js").model,
-    // coalition: require(__dirname + "/coalition.js").model,
-    // campaign: require(__dirname + "/campaign.js").model,
-};
+            _.each(models, function(name) {
+                list[name] = require(_this.list[name]).model;
+            });
+
+            return list;
+        },
+
+        loadForModel: function(model) {
+            var _this = this,
+                models = Object.keys(_this.list),
+                list = {};
+
+            _.each(models, function(name) {
+                if (name !== model) {
+                    list[name] = require(_this.list[name]).model;
+                }
+            });
+
+            return list;
+        }
+    };
 
 exports.models = models;

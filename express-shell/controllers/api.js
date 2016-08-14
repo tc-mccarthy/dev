@@ -6,7 +6,7 @@ var request = require("request"),
 
     config = require(__dirname + "/../config.js").config,
     db = require(__dirname + "/../lib/db.js").db,
-    models = require(__dirname + "/../models/index.js").models;
+    models = require(__dirname + "/../models/index.js").models.autoLoad();
 
 var api = {
 
