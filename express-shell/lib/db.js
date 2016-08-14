@@ -18,6 +18,16 @@ if (typeof config.mysql.slaves !== "undefined" && config.mysql.slaves.constructo
     });
 }
 
+
+var RawQuery = function(str) {
+    var _this = this;
+    this.value = str;
+
+    this.getValue = function() {
+        return _this.value;
+    }
+};
+
 var database = {
     tables: {},
 
@@ -32,11 +42,21 @@ var database = {
 
         _.each(cols, function(col) {
             if (typeof col === "string") {
-                c.push(util.format("`%s`", col));
+                if (col === "*") {
+                    c.push(util.format("%s", col));
+                } else {
+                    c.push(util.format("`%s`", col));
+                }
+            } else if (col instanceof RawQuery) {
+                c.push(col.getValue());
             }
         });
 
         return c;
+    },
+
+    raw: function(str) {
+        return new RawQuery(str);
     },
 
     log: function(query, conn, err) {
@@ -56,6 +76,8 @@ var database = {
     },
 
     get: function(options, cb) {
+        var _this = this;
+
         // adjust for no where property
         if (typeof options.where === "undefined") {
             options.where = []
@@ -115,7 +137,7 @@ var database = {
             sql.push(util.format("OFFSET %s", options.offset));
         }
 
-        sql = util.format(sql.join(" "), options.columns.join(", "), options.table);
+        sql = util.format(sql.join(" "), _this.columnize(options.columns).join(", "), options.table);
 
         this.query(sql, cb);
     },
