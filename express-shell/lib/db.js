@@ -39,10 +39,19 @@ var database = {
         return c;
     },
 
-    log: function(query, err) {
+    log: function(query, conn, err) {
         if (config.mysql.logging) {
-            console.log("Error running query:", query)
-            console.log(err);
+            var log = {
+                instance: conn._clusterId,
+                query: query,
+                err: false
+            };
+
+            if (err) {
+                log[err] = err;
+            }
+
+            console.log(log);
         }
     },
 
@@ -144,10 +153,7 @@ var database = {
                     console.log(err);
                 } else {
                     conn.query(query, function(err, rows, fields) {
-                        if (err) {
-                            _this.log(query, err);
-                        }
-
+                        _this.log(query, conn, err);
                         cb(rows);
                     });
                 }
@@ -161,10 +167,7 @@ var database = {
                     console.log(err);
                 } else {
                     conn.query(query, function(err, rows, fields) {
-                        if (err) {
-                            _this.log(query, err);
-                        }
-
+                        _this.log(query, conn, err);
                         cb(rows);
                     });
                 }

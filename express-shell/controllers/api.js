@@ -32,8 +32,7 @@ var api = {
                 col: "last_name",
                 sort: "ASC"
             }],
-            limit: 10,
-            offset: 10
+            limit: 10
         }, function(results) {
             res.send(JSON.stringify(results));
         });
