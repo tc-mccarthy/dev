@@ -4,5 +4,7 @@ var express = require('express'),
 
 /* GET home page. */
 router.get('/', c.api.main);
+router.get('/dbGetTest', c.api.dbGetTest);
+router.get('/dbUpsertTest', c.api.dbUpsertTest);
 
 module.exports = router;
