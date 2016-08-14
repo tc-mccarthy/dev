@@ -5,14 +5,18 @@ var request = require("request"),
     _ = require("lodash"),
     config = require(__dirname + "/../config.js").config,
     mysql = require("mysql"),
-    db = mysql.createConnection(config.mysql);
+    dbCluster = mysql.createPoolCluster();
 
-db.connect(function(err) {
-    if (err) {
-        console.log("Could not connect to db: ", err);
-    }
-});
+dbCluster.add('MASTER', config.mysql.master);
 
+//if slaves have been defined, add them to the dbCluster pool
+if (typeof config.mysql.slaves !== "undefined" && config.mysql.slaves.constructor === Array && config.mysql.slaves.length > 0) {
+    _.each(config.mysql.slaves, function(slave, key) {
+        var key = key + 1;
+
+        dbCluster.add("SLAVE" + key, slave);
+    });
+}
 
 var database = {
     tables: {},
@@ -130,16 +134,44 @@ var database = {
         this.query(sql, cb)
     },
 
+    //this query wrapper is designed to be used for all queries, including the methods above.  It handles read replica operations and should be leveraged for optimal application performance
     query: function(query, cb) {
-        var _this = this;
+        var _this = this,
+            nonmaster = query.toLowerCase().match(/^(show)|(select)/); //regex is used to figure out if this query is a read-only query
 
-        db.query(query, function(err, rows, fields) {
-            if (err) {
-                _this.log(query, err);
-            }
+        //non read-only queries are sent to the master
+        if (!nonmaster) {
+            dbCluster.getConnection('MASTER', function(err, conn) {
+                if (err) {
+                    console.log(err);
+                } else {
+                    conn.query(query, function(err, rows, fields) {
+                        if (err) {
+                            _this.log(query, err);
+                        }
 
-            cb(rows);
-        });
+                        cb(rows);
+                    });
+                }
+            });
+        }
+
+        //read only queries are routed betwixt master and slaves via round-robin
+        else {
+            dbCluster.getConnection(function(err, conn) {
+                if (err) {
+                    console.log(err);
+                } else {
+                    conn.query(query, function(err, rows, fields) {
+                        if (err) {
+                            _this.log(query, err);
+                        }
+
+                        cb(rows);
+                    });
+                }
+            });
+        }
     }
 };
 
