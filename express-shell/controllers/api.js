@@ -5,7 +5,8 @@ var request = require("request"),
     _ = require("lodash"),
 
     config = require(__dirname + "/../config.js").config,
-    db = require(__dirname + "/../lib/db.js").db;
+    db = require(__dirname + "/../lib/db.js").db,
+    models = require(__dirname + "/../models/index.js").models;
 
 var api = {
 
@@ -49,7 +50,32 @@ var api = {
         }, function(results) {
             res.send(JSON.stringify(results));
         });
-    }
+    },
+
+    modelGetTest: function(req, res, next) {
+        models.user.find({
+            where: [{
+                col: "id",
+                op: "=",
+                val: 1
+            }],
+            columns: ["*"]
+        }, function(results) {
+            res.send(JSON.stringify(results));
+        });
+    },
+
+    modelCreateTest: function(req, res, next) {
+        models.user.create({
+                first_name: "TC",
+                last_name: "McCarthy",
+                slug: db.slugify(["TC", "McCarthy"].join(" ")),
+                profile: "This is a test"
+            },
+            function(results) {
+                res.send(JSON.stringify(results));
+            });
+    },
 
 
 };

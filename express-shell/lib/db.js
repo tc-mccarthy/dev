@@ -29,7 +29,19 @@ var RawQuery = function(str) {
 };
 
 var database = {
-    tables: {},
+    tables: {
+        campaigns: "campaigns",
+        lobbyists: "lobbyists",
+        users: "users",
+        coalitions: "coalitions",
+        organizations: "organizations",
+        relationship: {
+            campaign_coalition: "campaign_coalition_relationships",
+            lobbyist_coalition: "lobbyist_coalition_relationships",
+            organization_coalition: "organization_coalition_relationships",
+            user_coalition: "user_coalition_relationships"
+        }
+    },
 
     slugify: function(str) {
         var slug = str.trim().replace(/[^A-Za-z0-9]+/g, "-").toLowerCase();
@@ -161,6 +173,61 @@ var database = {
         sql = util.format(sql.join(" "), options.table, cols_formatted, vals.join(", "), update.join(", "));
 
         this.query(sql, cb)
+    },
+
+    insert: function(options, cb) {
+        var cols = Object.keys(options.data),
+            cols_formatted = this.columnize(cols),
+            vals = [],
+            sql = [
+                "INSERT INTO %s (%s)",
+                "VALUES(%s)"
+            ];
+
+        _.each(cols, function(col, key) {
+            vals.push(util.format("'%s'", options.data[col]));
+        });
+
+        sql = util.format(sql.join(" "), options.table, cols_formatted, vals.join(", "));
+
+        this.query(sql, cb);
+    },
+
+    update: function(options, cb) {
+        var cols = Object.keys(options.data),
+            cols_formatted = this.columnize(cols),
+            vals = [],
+            where = [],
+            sql = [
+                "UPDATE %s",
+                "SET %s",
+                "WHERE %s"
+            ].join(" ");
+
+        _.each(cols, function(col, key) {
+            vals.push(util.format("%s = '%s'", cols_formatted[key], options.data[col]));
+        });
+
+        // begin where clause, if defined
+        if (options.where.length > 0) {
+            _.each(options.where, function(clause, key) {
+                var statement = "WHERE";
+                if (key > 0) {
+                    statement = "AND"
+                }
+
+                where.push(util.format("%s %s %s '%s'", statement, clause.col, clause.op, clause.val));
+            });
+
+            sql = util.format(sql, options.table, vals.join(", "), where.join(" "));
+
+            this.query(sql, cb);
+        } else {
+            cb([{
+                error: true,
+                message: "WHERE clause is required"
+            }]);
+        }
     },
 
     //this query wrapper is designed to be used for all queries, including the methods above.  It handles read replica operations and should be leveraged for optimal application performance

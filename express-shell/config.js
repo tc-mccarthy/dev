@@ -1,6 +1,6 @@
 var config = {
     app: {
-        port: 3011
+        port: 4000
     },
     mysql: {
         master: {
