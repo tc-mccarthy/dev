@@ -129,8 +129,6 @@ var database = {
 
         sql = util.format(sql.join(" "), options.table, cols_formatted, vals.join(", "), update.join(", "));
 
-        console.log(sql);
-
         this.query(sql, cb)
     },
 
