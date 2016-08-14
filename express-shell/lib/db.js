@@ -182,7 +182,7 @@ var database = {
             });
         }
 
-        //read only queries are routed betwixt master and slaves via round-robin
+        //read-only queries are routed betwixt master and slaves via round-robin
         else {
             dbCluster.getConnection(function(err, conn) {
                 if (err) {
