@@ -6,6 +6,9 @@
  * 3. Prevent adjustments of font size after orientation changes in IE and iOS.
  */
 
+*, *:before, *:after {
+  box-sizing: border-box;
+}
 html {
   font-family: sans-serif; /* 1 */
   line-height: 1.15; /* 2 */
@@ -69,7 +72,7 @@ template, /* 1 */
 }
 
 /* Links
-  ========================================================================== */
+========================================================================== */
 
 /**
 * 1. Remove the gray background on active links in IE 10.
@@ -90,7 +93,7 @@ a:active, a:hover {
 }
 
 /* Text-level semantics
-  ========================================================================== */
+========================================================================== */
 
 /**
 * 1. Remove the bottom border in Firefox 39-.
@@ -166,7 +169,7 @@ sup {
 }
 
 /* Embedded content
-  ========================================================================== */
+========================================================================== */
 
 /**
 * Remove the border on images inside links in IE 10-.
@@ -184,7 +187,7 @@ svg:not(:root) {
 }
 
 /* Grouping content
-  ========================================================================== */
+========================================================================== */
 
 /**
 * 1. Correct the inheritance and scaling of font size in all browsers.
@@ -214,7 +217,7 @@ hr {
 }
 
 /* Forms
-  ========================================================================== */
+========================================================================== */
 
 /**
 * 1. Change font properties to `inherit` in all browsers (opinionated).
