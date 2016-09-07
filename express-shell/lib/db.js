@@ -233,11 +233,8 @@ var database = {
     //this query wrapper is designed to be used for all queries, including the methods above.  It handles read replica operations and should be leveraged for optimal application performance
     query: function(query, cb) {
         var _this = this,
-            nonmaster = query.toLowerCase().match(/^(show)|(select)/); //regex is used to figure out if this query is a read-only query
-
-        //non read-only queries are sent to the master
-        if (!nonmaster) {
-            dbCluster.getConnection('MASTER', function(err, conn) {
+            nonmaster = query.toLowerCase().match(/^(show)|(select)/), //regex is used to figure out if this query is a read-only query
+            connectionProcess = function(err, conn) {
                 if (err) {
                     console.log(err);
                 } else {
@@ -246,21 +243,18 @@ var database = {
                         cb(rows);
                     });
                 }
-            });
+
+                conn.release();
+            }
+
+        //non read-only queries are sent to the master
+        if (!nonmaster) {
+            dbCluster.getConnection('MASTER', connectionProcess);
         }
 
         //read-only queries are routed betwixt master and slaves via round-robin
         else {
-            dbCluster.getConnection(function(err, conn) {
-                if (err) {
-                    console.log(err);
-                } else {
-                    conn.query(query, function(err, rows, fields) {
-                        _this.log(query, conn, err);
-                        cb(rows);
-                    });
-                }
-            });
+            dbCluster.getConnection(connectionProcess);
         }
     }
 };
