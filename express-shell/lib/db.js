@@ -5,7 +5,9 @@ var request = require("request"),
     _ = require("lodash"),
     config = require(__dirname + "/../config.js").config,
     mysql = require("mysql"),
-    dbCluster = mysql.createPoolCluster();
+    dbCluster = mysql.createPoolCluster({
+        restoreNodeTimeout: 1000
+    });
 
 dbCluster.add('MASTER', config.mysql.master);
 
@@ -30,17 +32,11 @@ var RawQuery = function(str) {
 
 var database = {
     tables: {
-        campaigns: "campaigns",
-        lobbyists: "lobbyists",
-        users: "users",
-        coalitions: "coalitions",
-        organizations: "organizations",
-        relationship: {
-            campaign_coalition: "campaign_coalition_relationships",
-            lobbyist_coalition: "lobbyist_coalition_relationships",
-            organization_coalition: "organization_coalition_relationships",
-            user_coalition: "user_coalition_relationships"
-        }
+        messages: "slack_messages",
+        users: "slack_authors",
+        chats: "slack_chats",
+        posts: "ndwp.nd_15_posts",
+        postmeta: "ndwp.nd_15_postmeta",
     },
 
     slugify: function(str) {
@@ -119,7 +115,7 @@ var database = {
                     statement = "AND"
                 }
 
-                sql.push(util.format("%s %s %s '%s'", statement, clause.col, clause.op, clause.val));
+                sql.push(util.format("%s %s %s '%s'", statement, clause.col, clause.op, _this.addslashes(clause.val)));
             });
         }
 
@@ -157,6 +153,7 @@ var database = {
     upsert: function(options, cb) {
         var cols = Object.keys(options.data),
             cols_formatted = this.columnize(cols),
+            _this = this,
             vals = [],
             update = [],
             sql = [
@@ -166,7 +163,7 @@ var database = {
             ];
 
         _.each(cols, function(col, key) {
-            vals.push(util.format("'%s'", options.data[col]));
+            vals.push(util.format("'%s'", _this.addslashes(options.data[col])));
             update.push(util.format("%s=VALUES(%s)", cols_formatted[key], col));
         });
 
@@ -178,6 +175,7 @@ var database = {
     insert: function(options, cb) {
         var cols = Object.keys(options.data),
             cols_formatted = this.columnize(cols),
+            _this = this,
             vals = [],
             sql = [
                 "INSERT INTO %s (%s)",
@@ -185,7 +183,7 @@ var database = {
             ];
 
         _.each(cols, function(col, key) {
-            vals.push(util.format("'%s'", options.data[col]));
+            vals.push(util.format("'%s'", _this.addslashes(options.data[col])));
         });
 
         sql = util.format(sql.join(" "), options.table, cols_formatted, vals.join(", "));
@@ -196,6 +194,7 @@ var database = {
     update: function(options, cb) {
         var cols = Object.keys(options.data),
             cols_formatted = this.columnize(cols),
+            _this = this,
             vals = [],
             where = [],
             sql = [
@@ -205,7 +204,7 @@ var database = {
             ].join(" ");
 
         _.each(cols, function(col, key) {
-            vals.push(util.format("%s = '%s'", cols_formatted[key], options.data[col]));
+            vals.push(util.format("%s = '%s'", cols_formatted[key], _this.addslashes(options.data[col])));
         });
 
         // begin where clause, if defined
@@ -216,7 +215,7 @@ var database = {
                     statement = "AND"
                 }
 
-                where.push(util.format("%s %s %s '%s'", statement, clause.col, clause.op, clause.val));
+                where.push(util.format("%s %s %s '%s'", statement, clause.col, clause.op, _this.addslashes(clause.val)));
             });
 
             sql = util.format(sql, options.table, vals.join(", "), where.join(" "));
@@ -256,6 +255,10 @@ var database = {
         else {
             dbCluster.getConnection(connectionProcess);
         }
+    },
+
+    addslashes: function (str){
+        return  (str + '').replace(/([\\"\\'])/g, '\\$1').replace(/\u0000/g, '\\0');
     }
 };
 
