@@ -257,8 +257,50 @@ var database = {
         }
     },
 
-    addslashes: function (str){
-        return  (str + '').replace(/([\\"\\'])/g, '\\$1').replace(/\u0000/g, '\\0');
+    queryStream: function(query, cb) {
+        //note, CB is an object of methods for each event. Each method should check for a defined callback 
+
+        var _this = this,
+            nonmaster = query.toLowerCase().match(/^(show)|(select)/), //regex is used to figure out if this query is a read-only query
+            connectionProcess = function(err, conn) {
+                if (err) {
+                    console.log(err);
+                } else {
+                    conn.query(query).on('error', function(err) {
+                            cb.error(err);
+                        })
+                        .on('fields', function(fields) {
+                            cb.fields(fields);
+                        })
+                        .on('result', function(row) {
+                            // Pausing the connnection is useful if your processing involves I/O
+                            conn.pause();
+
+                            cb.row(row, function() {
+                                conn.resume();
+                            });
+                        })
+                        .on('end', function() {
+                            cb.done();
+                        });
+                }
+
+                conn.release();
+            }
+
+        //non read-only queries are sent to the master
+        if (!nonmaster) {
+            dbCluster.getConnection('MASTER', connectionProcess);
+        }
+
+        //read-only queries are routed betwixt master and slaves via round-robin
+        else {
+            dbCluster.getConnection(connectionProcess);
+        }
+    },
+
+    addslashes: function(str) {
+        return (str + '').replace(/([\\"\\'])/g, '\\$1').replace(/\u0000/g, '\\0');
     }
 };
 
