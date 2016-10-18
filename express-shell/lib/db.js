@@ -258,7 +258,39 @@ var database = {
     },
 
     queryStream: function(query, cb) {
-        //note, CB is an object of methods for each event. Each method should check for a defined callback 
+        /*note, CB is an object of methods for each event. Each method should check for a defined callback 
+            EX
+            cb = {
+                error: function(err, cb){
+                    //do the stuff
+
+                    if(typeof cb === "function"){
+                        cb();
+                    }
+                },
+                fields: function(fields, cb){
+                    //do the stuff
+
+                    if(typeof cb === "function"){
+                        cb();
+                    }
+                },
+                row: function(row, cb){
+                    //do the stuff
+
+                    if(typeof cb === "function"){
+                        cb();
+                    }
+                },
+                done: function(cb){
+                    //do the stuff
+
+                    if(typeof cb === "function"){
+                        cb();
+                    }
+                }
+            }
+        */
 
         var _this = this,
             nonmaster = query.toLowerCase().match(/^(show)|(select)/), //regex is used to figure out if this query is a read-only query
