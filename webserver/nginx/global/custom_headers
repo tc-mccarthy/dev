@@ -1,0 +1,2 @@
+add_header X-TC-Cache $upstream_cache_status;
+add_header X-Backend  "banner";
