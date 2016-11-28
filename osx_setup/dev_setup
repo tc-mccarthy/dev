@@ -3,29 +3,17 @@ echo "Install Xcode CLI"
 sudo xcode-select --install
 clear
 
-echo "Installing Oh My ZSH"
-curl -L http://install.ohmyz.sh | sh
-clear
-
-echo "Installing PIP"
-sudo easy_install pip
-clear
-
-echo "Installing awscli"
-sudo pip install awscli
-clear
-
 echo "Installing Homebrew"
 ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 clear
+
+echo "Installing awscli, nodejs, python, ruby, cask"
+brew install awscli nodejs python ruby cask
 
 echo "Installing Compass"
 sudo gem install compass
 clear
 
-echo "Installing node"
-sudo brew install node
-clear
 
 echo "Install nodemon"
 sudo npm install -g nodemon
@@ -36,12 +24,21 @@ sudo npm install -g forever
 clear
 
 echo "Install grunt"
-sudo npm install -g grunt-cli
+sudo npm install -g grunt grunt-cli
 clear
 
-echo "Install express"
-sudo npm install -g express-generator
+echo "Install mysqlworkbench"
+brew cask install mysqlworkbench
+clear
+
+echo "Install virtualbox"
+brew cask install virtualbox
 clear
 
 brew doctor
+
+echo "Installing Oh My ZSH"
+curl -L http://install.ohmyz.sh | sh
+clear
+
 echo "Install complete!"
