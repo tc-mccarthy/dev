@@ -1,8 +1,4 @@
 #!/bin/bash
-echo "Install Xcode CLI"
-sudo xcode-select --install
-clear
-
 echo "Installing Homebrew"
 ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 clear
@@ -15,24 +11,12 @@ sudo gem install compass
 clear
 
 
-echo "Install nodemon"
-sudo npm install -g nodemon
-clear 
-
-echo "Install forever"
-sudo npm install -g forever
+echo "Install nodemon, forever and grunt"
+sudo npm install -g nodemon forever grunt grunt-cli
 clear
 
-echo "Install grunt"
-sudo npm install -g grunt grunt-cli
-clear
-
-echo "Install mysqlworkbench"
-brew cask install mysqlworkbench
-clear
-
-echo "Install virtualbox"
-brew cask install virtualbox
+echo "Install mysqlworkbench, virtualbox, google drive, dropbox, firefox, chrome, sublime text, atom, Grammarly"
+brew cask install mysqlworkbench virtualbox firefox google-chrome google-drive dropbox sublime-text atom grammarly
 clear
 
 brew doctor
