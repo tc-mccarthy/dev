@@ -15,11 +15,14 @@ echo "Install nodemon, forever and grunt"
 sudo npm install -g nodemon forever grunt grunt-cli
 clear
 
-echo "Install mysqlworkbench, virtualbox, google drive, dropbox, firefox, chrome, sublime text, atom, Grammarly"
-brew cask install mysqlworkbench virtualbox firefox google-chrome google-drive dropbox sublime-text atom grammarly
+echo "Install mysqlworkbench, virtualbox, google drive, dropbox, firefox, chrome, sublime text, atom, spotify, Grammarly"
+brew cask install mysqlworkbench virtualbox firefox google-chrome google-drive dropbox sublime-text atom grammarly spotify
 clear
 
 brew doctor
+
+echo "Setup atom extensions"
+apm install project-view project-manager atom-beautify
 
 echo "Installing Oh My ZSH"
 curl -L http://install.ohmyz.sh | sh
