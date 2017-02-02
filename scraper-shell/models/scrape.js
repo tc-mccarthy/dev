@@ -6,9 +6,9 @@ var request = require("request"),
 
     config = require(__dirname + "/../config.js").config,
     Base = require(__dirname + "/base.js").Base,
-    models = require(__dirname + "/index.js").models.loadForModel("user"),
+    models = require(__dirname + "/index.js").models.loadForModel("scrape"),
     db = require(__dirname + "/../lib/db.js").db;
 
-var user = new Base(db.tables.users);
+var user = new Base(db.tables.scrape);
 
 exports.model = user;
