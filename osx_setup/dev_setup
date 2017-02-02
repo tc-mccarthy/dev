@@ -3,11 +3,11 @@ echo "Installing Homebrew"
 ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 clear
 
-echo "Installing awscli, nodejs, python, ruby, cask"
-brew install awscli nodejs python ruby cask
+echo "Installing awscli, nodejs, python, ruby, cask, php-cs-fixer"
+brew install awscli nodejs python ruby cask homebrew/php/php-cs-fixer
 
 echo "Installing Compass"
-sudo gem install compass
+sudo gem install compass compass-respond
 clear
 
 
@@ -16,7 +16,7 @@ sudo npm install -g nodemon forever grunt grunt-cli
 clear
 
 echo "Install mysqlworkbench, virtualbox, google drive, dropbox, firefox, chrome, sublime text, atom, spotify, Grammarly"
-brew cask install mysqlworkbench virtualbox firefox google-chrome google-drive dropbox sublime-text atom grammarly spotify
+brew cask install mysqlworkbench virtualbox virtualbox-extension-pack firefox google-chrome google-drive dropbox sublime-text atom grammarly spotify
 clear
 
 brew doctor
