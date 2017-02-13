@@ -1,0 +1,10 @@
+#!/bin/bash
+
+## go root
+sudo -i
+
+## umask set
+echo "umask 002" > /etc/launchd-user.conf
+
+## Reboot
+sudo reboot
