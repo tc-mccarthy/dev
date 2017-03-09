@@ -17,4 +17,4 @@ apt-get -y install screen vim ssh nginx mysql-server php7.0-fpm php7.0-curl php7
 ### THEN INSTALL NODE AND DEPENDENCIES ###
 curl -sL https://deb.nodesource.com/setup_7.x | sudo -E bash -
 sudo apt-get install -y nodejs
-npm install -g forever forever-service
+npm install -g pm2
