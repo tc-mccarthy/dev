@@ -45,4 +45,4 @@ iptables -P OUTPUT ACCEPT
 ## SAVE OUR POLICY AND MAKE PERSIST BY INSTALLING IPTABLES-PERSISTENT
 apt-get -y update
 apt-get install -y iptables-persistent
-invoke-rc.d iptables-persistent save
+sudo netfilter-persistent save
