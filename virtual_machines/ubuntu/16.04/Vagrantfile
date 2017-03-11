@@ -1,0 +1,25 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure('2') do |config|
+    #set the base box
+    config.vm.box = 'ubuntu/xenial64'
+
+    # provision the base box
+    config.vm.provision 'shell', inline: 'export DEBIAN_FRONTEND=noninteractive; curl https://raw.githubusercontent.com/tc-mccarthy/dev/master/webserver/ubuntu-setup/16.04/ubuntuKickStart-app.sh | bash'
+
+    # forward the needed ports
+    config.vm.network 'forwarded_port', guest: 80, host: 80
+    config.vm.network 'forwarded_port', guest: 3306, host: 3306
+    config.vm.network 'forwarded_port', guest: 443, host: 443
+    config.vm.network 'forwarded_port', guest: 11211, host: 11211
+
+    config.vm.provider :virtualbox do |vb|
+      vb.name = "Danger Room - 16.04"
+    end
+
+
+    # Share your sites directory
+    config.vm.synced_folder '/Users/tcmccarthy/Sites', '/www'
+
+end
