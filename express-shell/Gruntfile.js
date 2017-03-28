@@ -44,13 +44,13 @@ module.exports = function (grunt) {
 
 		watch: {
 			js: {
-				files: 'assets/js/*.js',
-				tasks: ['concat', 'uglify']
+				files: ['assets/js/*.js', 'assets/js/*/*.js', 'Gruntfile.js'],
+				tasks: ['newer:jshint', 'newer:concat', 'newer:uglify']
 			},
 
 			css: {
 				files: '**/*.scss',
-				tasks: ['compass', 'cssmin']
+				tasks: ['newer:compass', 'newer:cssmin']
 			}
 		},
 		jshint: {
