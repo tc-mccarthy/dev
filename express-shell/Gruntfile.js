@@ -1,68 +1,80 @@
-module.exports = function(grunt) {
+module.exports = function (grunt) {
 
-    // Project configuration.
-    grunt.initConfig({
-        pkg: grunt.file.readJSON('package.json'),
+	// Project configuration.
+	grunt.initConfig({
+		pkg: grunt.file.readJSON('package.json'),
 
-        uglify: {
-            files: {
-                src: 'public/js/app.js', // source files mask
-                dest: 'public/js/', // destination folder
-                expand: true, // allow dynamic building
-                flatten: true, // remove all unnecessary nesting
-                ext: '.min.js' // replace .js to .min.js
-            }
-        },
+		uglify: {
+			files: {
+				src: ['public/js/*.js', '!public/js/*.min.js'] // source files mask
+				dest: 'public/js/', // destination folder
+				expand: true, // allow dynamic building
+				flatten: true, // remove all unnecessary nesting
+				ext: '.min.js' // replace .js to .min.js
+			}
+		},
 
-        compass: {
-            dist: {
-                options: {
-                    sassDir: 'assets/scss',
-                    cssDir: 'public/css'
-                }
-            }
-        },
+		compass: {
+			dist: {
+				options: {
+					sassDir: 'assets/scss',
+					cssDir: 'public/css'
+				}
+			}
+		},
 
-        concat: {
-            dist: {
-                src: ['assets/js/*.js', '!assets/js/app.js'],
-                dest: 'public/js/app.js',
-            }
-        },
+		concat: {
+			dist: {
+				src: ['assets/js/*.js'],
+				dest: 'public/js/app.js',
+			}
+		},
 
-        cssmin: {
-            target: {
-                files: [{
-                    expand: true,
-                    cwd: 'public/css',
-                    src: ['*.css', '!*.min.css'],
-                    dest: 'public/css',
-                    ext: '.min.css'
+		cssmin: {
+			target: {
+				files: [{
+					expand: true,
+					cwd: 'public/css',
+					src: ['*.css', '!*.min.css'],
+					dest: 'public/css',
+					ext: '.min.css'
                 }]
-            }
-        },
+			}
+		},
 
-        watch: {
-            js: {
-                files: 'assets/js/*.js',
-                tasks: ['concat', 'uglify']
-            },
+		watch: {
+			js: {
+				files: 'assets/js/*.js',
+				tasks: ['concat', 'uglify']
+			},
 
-            css: {
-                files: '**/*.scss',
-                tasks: ['compass', 'cssmin']
-            }
-        }
-    });
+			css: {
+				files: '**/*.scss',
+				tasks: ['compass', 'cssmin']
+			}
+		},
+		jshint: {
+			options: {
+				curly: true,
+				eqnull: true,
+				browser: true,
+				expr: true,
+				globals: {
+					jQuery: true
+				},
+				sub: true
 
-    // load plugins
-    grunt.loadNpmTasks('grunt-contrib-compass');
-    grunt.loadNpmTasks('grunt-contrib-watch');
-    grunt.loadNpmTasks('grunt-contrib-uglify');
-    grunt.loadNpmTasks('grunt-contrib-concat');
-    grunt.loadNpmTasks('grunt-contrib-cssmin');
+			},
+			uses_defaults: ['assets/js/*.js', '!assets/js/__*.js', 'assets/js/*/*.js', '!assets/js/*/__*.js']
+		}
+	});
 
-    // register at least this one task
-    grunt.registerTask('default', ['concat', 'uglify', 'compass', 'cssmin']);
-    grunt.registerTask('dev', ['concat', 'uglify', 'compass', 'cssmin', 'watch']);
+	// load plugins
+	// load plugins
+	require('load-grunt-tasks')(grunt, { scope: 'devDependencies' });
+
+	// register at least this one task
+	// register at least this one task
+	grunt.registerTask('default', ['concat', 'uglify', 'compass', 'cssmin']);
+	grunt.registerTask('dev', ['jshint', 'concat', 'uglify', 'compass', 'cssmin', 'watch']);
 };
