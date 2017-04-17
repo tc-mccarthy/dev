@@ -16,7 +16,7 @@ sudo npm install -g nodemon forever grunt grunt-cli
 clear
 
 echo "Install mysqlworkbench, virtualbox, google drive, dropbox, firefox, chrome, sublime text, atom, spotify, Grammarly"
-brew cask install mysqlworkbench virtualbox virtualbox-extension-pack firefox google-chrome google-drive dropbox sublime-text atom grammarly spotify
+brew cask install mysqlworkbench virtualbox virtualbox-extension-pack firefox google-chrome google-drive dropbox sublime-text atom grammarly spotify slack
 clear
 
 brew doctor
