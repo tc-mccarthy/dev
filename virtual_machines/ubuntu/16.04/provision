@@ -14,11 +14,13 @@ cp /vagrant/config_files/memcached.conf /etc/.
 
 rm -Rf /etc/nginx/sites-enabled
 rm /etc/nginx/nginx.conf
+rm /etc/nginx/fastcgi_params
 ln -s /www/mccarthy_digital_config/nginx/sites-enabled /etc/nginx/.
 ln -s /www/mccarthy_digital_config/nginx/journodev_list /etc/nginx/.
 ln -s /www/mccarthy_digital_config/ssl /etc/nginx/.
 ln -s /www/dev/webserver/nginx/global /etc/nginx/.
 ln -sf /www/dev/webserver/nginx/nginx.conf /etc/nginx/.
+ln -sf /www/dev/webserver/nginx/fastcgi_params /etc/nginx/.
 
 ## create log directories
 mkdir -p /var/log/nodejs
