@@ -50,7 +50,7 @@ module.exports = function (grunt) {
 
 			css: {
 				files: '**/*.scss',
-				tasks: ['newer:compass', 'newer:cssmin']
+				tasks: ['compass', 'cssmin']
 			}
 		},
 
@@ -67,6 +67,13 @@ module.exports = function (grunt) {
 
 			},
 			uses_defaults: ['assets/js/*.js', '!assets/js/__*.js', 'assets/js/*/*.js', '!assets/js/*/__*.js']
+		},
+
+		removelogging: {
+			dist: {
+				src: "js/app.js",
+				dest: "js/app.js",
+			}
 		}
 	});
 
@@ -76,6 +83,7 @@ module.exports = function (grunt) {
 
 	// register at least this one task
 	// register at least this one task
-	grunt.registerTask('default', ['concat', 'uglify', 'compass', 'cssmin']);
+	grunt.registerTask('default', ['concat', 'removelogging', 'uglify', 'compass', 'cssmin']);
 	grunt.registerTask('dev', ['jshint', 'concat', 'uglify', 'compass', 'cssmin', 'watch']);
+	grunt.registerTask('des', ['compass', 'cssmin', 'watch:css']);
 };

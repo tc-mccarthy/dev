@@ -6,7 +6,7 @@ module.exports = function (grunt) {
 
 		uglify: {
 			files: {
-				src: ['public/js/*.js', '!public/js/*.min.js'] // source files mask
+				src: ['js/*.js', '!js/*.min.js'], // source files mask
 				dest: 'public/js/', // destination folder
 				expand: true, // allow dynamic building
 				flatten: true, // remove all unnecessary nesting
@@ -34,11 +34,11 @@ module.exports = function (grunt) {
 			target: {
 				files: [{
 					expand: true,
-					cwd: 'public/css',
+					cwd: 'css',
 					src: ['*.css', '!*.min.css'],
 					dest: 'public/css',
 					ext: '.min.css'
-                }]
+				}]
 			}
 		},
 
@@ -50,9 +50,10 @@ module.exports = function (grunt) {
 
 			css: {
 				files: '**/*.scss',
-				tasks: ['newer:compass', 'newer:cssmin']
+				tasks: ['compass', 'cssmin']
 			}
 		},
+
 		jshint: {
 			options: {
 				curly: true,
@@ -66,6 +67,13 @@ module.exports = function (grunt) {
 
 			},
 			uses_defaults: ['assets/js/*.js', '!assets/js/__*.js', 'assets/js/*/*.js', '!assets/js/*/__*.js']
+		},
+
+		removelogging: {
+			dist: {
+				src: "public/js/app.js",
+				dest: "public/js/app.js",
+			}
 		}
 	});
 
@@ -75,6 +83,7 @@ module.exports = function (grunt) {
 
 	// register at least this one task
 	// register at least this one task
-	grunt.registerTask('default', ['concat', 'uglify', 'compass', 'cssmin']);
+	grunt.registerTask('default', ['concat', 'removelogging', 'uglify', 'compass', 'cssmin']);
 	grunt.registerTask('dev', ['jshint', 'concat', 'uglify', 'compass', 'cssmin', 'watch']);
+	grunt.registerTask('des', ['compass', 'cssmin', 'watch:css']);
 };
