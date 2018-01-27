@@ -4,10 +4,10 @@ A starter template for grunt projects.
 
 This grunt shell:
 
-1. Allows you to write all of your JS using ES6 syntax and lets you work on your modules as individual files
+1. Allows you to write all of your JS in modular, individual files
 2. Uses jshint to evaluate each of your partials for bad form and syntax errors
 3. Concatenates all of your partials
-4. Your es5-safe file is minified
+4. Your concatenated file is minified
 5. Compiles all of your Sass
 
 ## Development mode
