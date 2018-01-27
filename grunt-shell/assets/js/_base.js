@@ -1,33 +1,36 @@
 var app = {
-    ele: {},
-    init: function() {
-        var _this = this;
-        $(_this.onReady.bind(_this));
-        $(window).scroll(_this.onScroll.bind(_this));
-        $(window).resize(_this.onResize.bind(_this));
-        $(window).load(_this.onLoad.bind(_this));
-    },
+	ele: {},
+	init: function () {
+		var _this = this;
+		$(_this.onReady.bind(_this));
 
-    onReady: function() {
-        var _this = this;
-        this.binds();
-    },
+		$(window).on({
+			scroll: function (e) { _this.onScroll(e); },
+			resize: function (e) { _this.onResize(e); },
+			load: function (e) { _this.onLoad(e); }
+		});
+	},
 
-    onLoad: function() {
-        var _this = this;
-    },
+	onReady: function (e) {
+		var _this = this;
+		this.binds();
+	},
 
-    onScroll: function() {
-        var _this = this;
-    },
+	onLoad: function (e) {
+		var _this = this;
+	},
 
-    onResize: function() {
-        var _this = this;
-    },
+	onScroll: function (e) {
+		var _this = this;
+	},
 
-    binds: function() {
-        var _this = this;
-    }
+	onResize: function (e) {
+		var _this = this;
+	},
+
+	binds: function () {
+		var _this = this;
+	}
 };
 
 app.init();
