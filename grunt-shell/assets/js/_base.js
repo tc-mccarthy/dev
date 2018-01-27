@@ -5,26 +5,26 @@ var app = {
 		$(_this.onReady.bind(_this));
 
 		$(window).on({
-			scroll: function () { _this.onScroll(); },
-			resize: function () { _this.onResize(); },
-			load: function () { _this.onLoad(); }
+			scroll: function (e) { _this.onScroll(e); },
+			resize: function (e) { _this.onResize(e); },
+			load: function (e) { _this.onLoad(e); }
 		});
 	},
 
-	onReady: function () {
+	onReady: function (e) {
 		var _this = this;
 		this.binds();
 	},
 
-	onLoad: function () {
+	onLoad: function (e) {
 		var _this = this;
 	},
 
-	onScroll: function () {
+	onScroll: function (e) {
 		var _this = this;
 	},
 
-	onResize: function () {
+	onResize: function (e) {
 		var _this = this;
 	},
 
