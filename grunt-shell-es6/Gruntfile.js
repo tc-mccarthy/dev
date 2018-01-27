@@ -6,7 +6,7 @@ module.exports = function (grunt) {
 
 		uglify: {
 			files: {
-				src: ['js/*.js', '!js/*.min.js', '!js/*.es6.js'], // source files mask
+				src: ['js/*.js', '!js/*.min.js'], // source files mask
 				dest: 'js/', // destination folder
 				expand: true, // allow dynamic building
 				flatten: true, // remove all unnecessary nesting
@@ -26,7 +26,7 @@ module.exports = function (grunt) {
 		concat: {
 			dist: {
 				src: ['assets/js/*.js'],
-				dest: 'js/app.es6.js',
+				dest: 'js/working/app.es6.js',
 			}
 		},
 
@@ -41,8 +41,17 @@ module.exports = function (grunt) {
 				]
 			},
 			dist: {
-				src: ["js/app.es6.js"],
-				dest: "js/app.js"
+				//dest - string: src - array
+				src: ["js/working/app.es6.js"],
+				dest: "js/working/app.babel.js"
+			}
+		},
+
+		browserify: {
+			dist: {
+				files: {
+					'js/app.js': ['js/working/app.babel.js']
+				}
 			}
 		},
 
@@ -61,7 +70,7 @@ module.exports = function (grunt) {
 		watch: {
 			js: {
 				files: ['assets/js/*.js', 'assets/js/*/*.js', 'Gruntfile.js'],
-				tasks: ['newer:jshint', 'newer:concat', 'babel', 'newer:uglify']
+				tasks: ['newer:jshint', 'newer:concat', 'babel', 'browserify', 'newer:uglify']
 			},
 
 			css: {
@@ -100,7 +109,7 @@ module.exports = function (grunt) {
 
 	// register at least this one task
 	// register at least this one task
-	grunt.registerTask('default', ['concat', 'babel', 'removelogging', 'uglify', 'compass', 'cssmin']);
-	grunt.registerTask('dev', ['jshint', 'concat', 'babel', 'uglify', 'compass', 'cssmin', 'watch']);
+	grunt.registerTask('default', ['concat', 'babel', 'browserify', 'removelogging', 'uglify', 'compass', 'cssmin']);
+	grunt.registerTask('dev', ['jshint', 'concat', 'babel', 'browserify', 'uglify', 'compass', 'cssmin', 'watch']);
 	grunt.registerTask('des', ['compass', 'cssmin', 'watch:css']);
 };

@@ -22,3 +22,29 @@ When you're done and read to push your code out simply cancel your running grunt
 ## Tips
 1. Libraries (like the included jquery and lodash libraries) should be kept in your assets/js folder and be prefixed with a double underscore ( __ ) -- jshint will ignore these file then.
 2. You shouldn't include minified libraries in the assets folder. You should load the full version of the library so that the uglification process that grunt runs doesn't introduce bugs
+
+## Tree breakdown
+```
+├── Gruntfile.js - Controls the grunt process
+├── README.md - This file
+├── assets - Where your raw materials go
+│   ├── js - JS partials allow you to work in self-contained files that are later concatenated and minified
+│   │   ├── __jquery.js - jQuery is a library, so we prefix it with a double underscore __ so as to have it loaded at the beginning of the concatenation process (it works alphabetically) and also have jshint ignore it
+│   │   ├── __lodash.js - lodash is a library, so we prefix it with a double underscore __ so as to have it loaded at the beginning of the concatenation process (it works alphabetically) and also have jshint ignore it
+│   │   └── _base.js - base.js is a partial that gets the ball rolling.
+│   └── scss - Where your sass lives.
+│       ├── _base.scss
+│       ├── _mixins.scss
+│       ├── _normalize.scss - A nice reset so that all browsers have the same default files
+│       ├── _vars.scss
+│       └── style.scss - Compass looks at the style.scss file and compiles your CSS in the order you @import the partials in that file
+├── css - Your compiled and minified CSS, courtesy of composer. Names in this folder mirror the name of your master file in assets/scss
+│   ├── style.css
+│   └── style.min.css
+├── img
+│   └── empty
+├── js - your compiled JS
+│   ├── app.js - a concatenated file compiled alphabetically by the contents of assets/js.
+│   ├── app.min.js - a minified version of your js/app.js.
+└── package.json - Loads all of your dev-dependencies. Grunt automatically loads every thing in the dev-dependency list.
+```

@@ -1,3 +1,6 @@
+//load ES6 polyfill
+import 'babel-polyfill';
+
 var app = {
 	ele: {},
 	init: function () {
