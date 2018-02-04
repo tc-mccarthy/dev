@@ -38,3 +38,5 @@ mysql -e "create user 'root'@'%' IDENTIFIED BY 'root'; grant all on *.* to 'root
 service mysql restart
 service memcached restart
 nginx -t && nginx -s reload
+
+mysql < /vagrant/config_files/mysql_user_setup.sql
