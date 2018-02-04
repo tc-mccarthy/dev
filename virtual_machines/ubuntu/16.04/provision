@@ -26,7 +26,7 @@ ln -sf /www/dev/webserver/nginx/fastcgi_params /etc/nginx/.
 mkdir -p /var/log/nodejs
 
 ## adds nginx user to ubuntu
-usermod -aG ubuntu www-data
+usermod -aG vagrant www-data
 
 ## add host
 echo "192.168.100.100 localhost" >> /etc/hosts
