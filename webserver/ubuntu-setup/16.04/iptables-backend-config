@@ -14,21 +14,8 @@ iptables -P INPUT ACCEPT
 ## LOAD SUPPORT FOR ROUTINE
 iptables -A INPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
 
-## OPEN PORTS FOR BASIC WEB OPS
+## OPEN EVERYTHING ON THE BACKPLANE ONLY
 iptables -A INPUT -i eth1 -p all -j ACCEPT
-iptables -A INPUT -p tcp --dport 22 -j ACCEPT
-iptables -A INPUT -p tcp --dport 80 -j ACCEPT
-iptables -A INPUT -p tcp --dport 443 -j ACCEPT
-iptables -A INPUT -p tcp --dport 11211 -j ACCEPT
-iptables -A INPUT -p tcp --dport 3306 -j ACCEPT
-
-## EMAIL PORTS, IGNORED BY DEFAULT
-#iptables -A INPUT -p tcp --dport 25 -j ACCEPT
-#iptables -A INPUT -p tcp --dport 465 -j ACCEPT
-#iptables -A INPUT -p tcp -m tcp --dport 110 -j ACCEPT
-#iptables -A INPUT -p tcp -m tcp --dport 995 -j ACCEPT
-#iptables -A INPUT -p tcp -m tcp --dport 143 -j ACCEPT
-#iptables -A INPUT -p tcp -m tcp --dport 993 -j ACCEPT
 
 ## ADDED SECURITY FOR ANTI DDOS
 iptables -A INPUT -p tcp ! --syn -m state --state NEW -j DROP
