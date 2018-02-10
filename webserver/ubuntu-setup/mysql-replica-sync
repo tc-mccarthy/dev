@@ -1,0 +1,62 @@
+#!/bin/bash
+echo "SET MASTER USERNAME"
+read master_user
+
+echo "SET MASTER PASS"
+read master_pass
+
+echo "SET MASTER HOST"
+read master_host
+
+echo "SET SLAVE USERNAME"
+read slave_user
+
+echo "SET SLAVE PASS"
+read slave_pass
+
+echo "SET SLAVE HOST"
+read slave_host
+
+
+master_mysql_cmd="mysql -u $master_user -p$master_pass -h $master_host"
+slave_mysql_cmd="mysql -u $slave_user -p$slave_pass -h $slave_host"
+
+# LOCK DOWN MASTER
+echo "Locking master tables and resetting master"
+#$master_mysql_cmd -e "FLUSH TABLES WITH READ LOCK; RESET MASTER;"
+clear
+
+# STOP SLAVE
+echo "Stopping slave process and resetting slave"
+$slave_mysql_cmd -e "STOP SLAVE;"
+clear
+
+# MYSQLDUMP
+echo "Dumping data from master to slave"
+mysqldump -u $master_user -p$master_pass -h $master_host --all-databases --add-drop-database | pv | $slave_mysql_cmd
+clear
+
+# SHOW MASTER STATUS
+echo "Showing master status"
+$master_mysql_cmd -e "SHOW MASTER STATUS;"
+
+echo "Copy and paste the master log file from above"
+read log_file
+
+echo "Copy and paste the log position from above"
+read log_pos
+
+echo "Enter the user name for the replication user (slave permissions)"
+read replication_user
+
+echo "Enter the password for the replication user (slave permissions)"
+read replication_password
+
+echo "Setting up slave"
+
+$slave_mysql_cmd -e "RESET SLAVE; CHANGE MASTER TO MASTER_HOST='$master_host', MASTER_USER='$replication_user', MASTER_PASSWORD='$replication_password', MASTER_LOG_FILE='$log_file', MASTER_LOG_POS=$log_pos;"
+$slave_mysql_cmd -e "START SLAVE;"
+$slave_mysql_cmd -e "SHOW SLAVE STATUS\G;"
+
+echo "Releasing lock on master"
+$master_mysql_cmd -e "UNLOCK TABLES;"
