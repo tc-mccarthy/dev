@@ -23,7 +23,7 @@ slave_mysql_cmd="mysql -u $slave_user -p$slave_pass -h $slave_host"
 
 # LOCK DOWN MASTER
 echo "Locking master tables and resetting master"
-#$master_mysql_cmd -e "FLUSH TABLES WITH READ LOCK; RESET MASTER;"
+$master_mysql_cmd -e "FLUSH TABLES WITH READ LOCK; RESET MASTER;"
 clear
 
 # STOP SLAVE
