@@ -29,10 +29,10 @@ mkdir -p /var/log/nodejs
 usermod -aG vagrant www-data
 
 ## add host
-echo "192.168.100.100 localhost" >> /etc/hosts
+echo "192.168.101.100 localhost" >> /etc/hosts
 
 ## add root user
-mysql -e "create user 'root'@'%' IDENTIFIED BY 'root'; grant all on *.* to 'root'@'%';"
+# mysql -e "create user 'root'@'%' IDENTIFIED BY 'root'; grant all on *.* to 'root'@'%';"
 
 ## restart service stack
 service mysql restart

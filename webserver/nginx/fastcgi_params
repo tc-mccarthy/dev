@@ -27,8 +27,9 @@ fastcgi_param	REDIRECT_STATUS		200;
 ## FOR ADDED SECURITY WE PUT SENSITIVE CREDENTIALS IN ENV VARS INSTEAD OF CONFIG FILES. 
 ##THIS ALSO MAKES THEM ACCESSIBLE TO MOST SERVER-SIDE LANGUAGES
 
-fastcgi_param   MYSQL_USER              MYSQL USERNAME;
-fastcgi_param   MYSQL_PASS              MYSQL PASSWORD;
-fastcgi_param   MYSQL_HOST              MYSQL HOSTNAME;
-fastcgi_param   S3_KEY                  HAVE AN AWS S3 KEY? PUT IT HERE;
-fastcgi_param   S3_SECRET               HAVE AN AWS S3 SECRET? PUT IT HERE;
+fastcgi_param   MYSQL_USER              root;
+fastcgi_param   MYSQL_PASS              root;
+fastcgi_param   MYSQL_HOST              192.168.101.100;
+fastcgi_param   S3_KEY                  AKIAIQG347VX26327LYA;
+fastcgi_param   S3_SECRET               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;
+fastcgi_param	ENVIRONMENT		local;
