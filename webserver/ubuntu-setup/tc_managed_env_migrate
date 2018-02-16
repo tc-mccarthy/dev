@@ -1,0 +1,39 @@
+#!/bin/bash
+########################################################################
+#UPDATE THE VARIABLES IN THIS SCRIPT TO MODIFY THE TC_MANAGED SCHEMA####
+########################################################################
+
+search="stage"
+replace="local"
+
+mysql_user="root"
+mysql_pass="root"
+mysql_host="localhost"
+mysql_db="tc_managed"
+mysql_table_prefix="wp_"
+
+# blogs
+mysql -u $mysql_user -p$mysql_pass -h $mysql_host -e "UPDATE ${mysql_db}.${mysql_table_prefix}blogs SET domain = REPLACE(domain, '${search}', '${replace}')"
+
+# sitemeta
+mysql -u $mysql_user -p$mysql_pass -h $mysql_host -e "UPDATE ${mysql_db}.${mysql_table_prefix}sitemeta SET meta_value = REPLACE(meta_value, '${search}', '${replace}') WHERE meta_key = 'siteurl'"
+
+# site
+mysql -u $mysql_user -p$mysql_pass -h $mysql_host -e "UPDATE ${mysql_db}.${mysql_table_prefix}site SET domain = REPLACE(domain, '${search}', '${replace}')"
+
+# domain
+mysql -u $mysql_user -p$mysql_pass -h $mysql_host -e "UPDATE ${mysql_db}.${mysql_table_prefix}domain_mapping SET domain = REPLACE(domain, '${search}', '${replace}')"
+
+# site 1
+mysql -u $mysql_user -p$mysql_pass -h $mysql_host -e "UPDATE ${mysql_db}.${mysql_table_prefix}options SET option_value = REPLACE(option_value, '${search}', '${replace}') WHERE option_name IN ('siteurl', 'home')"
+mysql -u $mysql_user -p$mysql_pass -h $mysql_host -e "UPDATE ${mysql_db}.${mysql_table_prefix}posts SET post_content = REPLACE(post_content, '${search}', '${replace}')"
+mysql -u $mysql_user -p$mysql_pass -h $mysql_host -e "UPDATE ${mysql_db}.${mysql_table_prefix}postmeta SET meta_value = REPLACE(meta_value, '${search}', '${replace}')"
+
+
+
+for i in `seq 2 45`;
+    do
+        mysql -u $mysql_user -p$mysql_pass -h $mysql_host -e "UPDATE ${mysql_db}.${mysql_table_prefix}${i}_options SET option_value = REPLACE(option_value, '${search}', '${replace}') WHERE option_name IN ('siteurl', 'home')"
+        mysql -u $mysql_user -p$mysql_pass -h $mysql_host -e "UPDATE ${mysql_db}.${mysql_table_prefix}${i}_posts SET post_content = REPLACE(post_content, '${search}', '${replace}')"
+        mysql -u $mysql_user -p$mysql_pass -h $mysql_host -e "UPDATE ${mysql_db}.${mysql_table_prefix}${i}_postmeta SET meta_value = REPLACE(meta_value, '${search}', '${replace}')"
+    done
