@@ -1,0 +1,65 @@
+#!/bin/bash
+
+######################################################################
+# INSTALLS THE CORAL PROJECTS'S TALK COMMENTING SYSTEM ON RHEL BOXES #
+######################################################################
+
+# CONFIG
+install_path=$HOME #update this to reflect the path you want the Talk folder installed to
+
+#update this to reflect the path to the mongo instance and db
+TALK_MONGO_URL=mongodb://127.0.0.1:27017/talk
+#update this to reflect the redis url and port
+TALK_REDIS_URL=redis://127.0.0.1:6379
+#update this to reflect the URL that will respond to talk requests
+TALK_ROOT_URL=https://stage.talk.newsday.com
+#update this to reflect the port you want this talk instance to run on
+TALK_PORT=3000
+#update this to be a secure string -- this is used to secure your talk instance. Recommended to generate a password. https://lastpass.com/generatepassword.php
+TALK_JWT_SECRET=password
+
+# nginx
+## Fetch nginx repo
+cd /tmp
+wget http://nginx.org/packages/centos/7/noarch/RPMS/nginx-release-centos-7-0.el7.ngx.noarch.rpm
+
+## Install nginx
+yum local install nginx-release-centos-7-0.el7.ngx.noarch.rpm
+
+## Start nginx
+systemctl start nginx.service
+
+# Install Node8
+curl --silent --location https://rpm.nodesource.com/setup_8.x | sudo bash -
+sudo yum -y install nodejs
+clear
+
+## Yarn 1.3.2+
+echo "Setting up Yarn and PM2"
+sudo npm install -g yarn pm2
+clear
+
+# Based on setup instructions in https://coralproject.github.io/talk/installation-from-source/
+
+## Download talk
+cd $install_path
+curl -sLo talk.tar.gz https://github.com/coralproject/talk/archive/master.tar.gz
+mkdir -p talk
+tar xzf talk.tar.gz -C talk --strip-components 1
+cd talk
+
+## Install talk
+yarn
+yarn build
+echo "NODE_ENV=stage
+TALK_MONGO_URL=$TALK_MONGO_URL
+TALK_REDIS_URL=$TALK_REDIS_URL
+TALK_ROOT_URL=$TALK_ROOT_URL
+TALK_PORT=$TALK_PORT
+TALK_JWT_SECRET=" > .env
+vi .env
+
+pm2 start npm -- start
+nginx -s reload
+pm2 startup
+pm2 save
