@@ -40,7 +40,7 @@ skip-external-locking
 #
 # Instead of skip-networking the default is now to listen only on
 # localhost which is more compatible and is not less secure.
-bind-address		= 192.168.101.100
+bind-address		= 192.168.100.101
 sql_mode = "ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION"
 #
 # * Fine Tuning
