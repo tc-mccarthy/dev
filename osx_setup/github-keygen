@@ -1,0 +1,16 @@
+#!/bin/bash
+
+FILENAME=github
+
+mkdir -p ~/.ssh
+
+ssh-keygen -t rsa -f ~/.ssh/$FILENAME -q -P ""
+
+echo "Host github.com
+	User git
+	IdentityFile ~/.ssh/$FILENAME
+" >> ~/.ssh/test
+
+chmod 600 ~/.ssh/config
+
+cat ~/.ssh/$FILENAME.pub
