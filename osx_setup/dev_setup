@@ -4,10 +4,10 @@ ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/
 clear
 
 echo "Installing awscli, nodejs, python, ruby, cask, php-cs-fixer"
-brew install awscli nodejs python ruby cask homebrew/php/php-cs-fixer
+brew install awscli nodejs python ruby cask php-cs-fixer
 
 echo "Installing Compass"
-sudo gem install compass compass-respond
+sudo gem install compass
 clear
 
 
@@ -16,13 +16,13 @@ sudo npm install -g nodemon forever grunt grunt-cli
 clear
 
 echo "Install mysqlworkbench, virtualbox, google drive, dropbox, firefox, chrome, sublime text, atom, spotify, Grammarly"
-brew cask install mysqlworkbench virtualbox virtualbox-extension-pack firefox google-chrome google-drive dropbox sublime-text atom grammarly spotify slack
+brew cask reinstall mysqlworkbench virtualbox virtualbox-extension-pack firefox google-chrome google-backup-and-sync dropbox sublime-text atom grammarly spotify slack microsoft-office
 clear
 
 brew doctor
 
 echo "Setup atom extensions"
-apm install project-view project-manager atom-beautify
+apm install project-view project-manager atom-beautify pigments less-than-slash seti-ui
 
 echo "Installing Oh My ZSH"
 curl -L http://install.ohmyz.sh | sh
