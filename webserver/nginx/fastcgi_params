@@ -29,7 +29,8 @@ fastcgi_param	REDIRECT_STATUS		200;
 
 fastcgi_param   MYSQL_USER              root;
 fastcgi_param   MYSQL_PASS              root;
-fastcgi_param   MYSQL_HOST              192.168.101.100;
+fastcgi_param   MYSQL_HOST              192.168.100.101;
 fastcgi_param   S3_KEY                  AKIAIQG347VX26327LYA;
 fastcgi_param   S3_SECRET               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;
 fastcgi_param	ENVIRONMENT		local;
+
