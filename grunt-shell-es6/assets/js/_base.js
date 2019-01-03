@@ -1,7 +1,4 @@
-//load ES6 polyfill
-import 'babel-polyfill';
-
-var app = {
+const app = {
 	ele: {},
 	init: function () {
 		//on DOM ready
@@ -9,7 +6,7 @@ var app = {
 			this.onReady(e);
 		});
 
-		$("window").on({
+		$(window).on({
 			scroll: (e) => { this.onScroll(e); },
 			resize: (e) => { this.onResize(e); },
 			load: (e) => { this.onLoad(e); }
