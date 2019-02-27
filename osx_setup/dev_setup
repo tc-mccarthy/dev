@@ -16,16 +16,15 @@ sudo npm install -g nodemon forever grunt grunt-cli
 clear
 
 echo "Install mysqlworkbench, virtualbox, google drive, dropbox, firefox, chrome, sublime text, atom, spotify, Grammarly"
-brew cask install --force mysqlworkbench virtualbox virtualbox-extension-pack firefox google-chrome google-backup-and-sync dropbox sublime-text atom grammarly spotify slack skype microsoft-office postman
+brew cask install --force mysqlworkbench firefox google-chrome google-backup-and-sync dropbox sublime-text atom grammarly spotify slack skype microsoft-office postman
 clear
 
 brew doctor
 
 echo "Setup atom extensions"
-apm install atom-beautify pigments less-than-slash seti-ui
+apm install atom-beautify pigments less-than-slash seti-ui open-in-browsers minimap
 curl -fsSL https://raw.githubusercontent.com/tc-mccarthy/edu/master/configs/atom.cson > ~/.atom/config.cson
-alias pip="pip3"
-pip install --upgrade sqlparse
+pip3 install --upgrade sqlparse
 
 echo "Installing Oh My ZSH"
 curl -L http://install.ohmyz.sh | sh
