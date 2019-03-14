@@ -1,0 +1,15 @@
+#!/bin/bash
+##################################
+## Runs TC's default series   ####
+## of commands for a new      ####
+## Ubuntu MySQL Server        ####
+##                            ####
+## Author: TC McCarthy        ####
+## Date: March 8, 2017       ####
+##################################
+
+##### FIRST GET ALL OF THE LATEST FILES #####
+apt-get -qy update && apt-get -qy upgrade
+
+#### THEN INSTALL THE BASICS ####
+apt-get -y install screen vim ssh mysql-server htop
