@@ -1,16 +1,20 @@
 #!/bin/bash
 
-FILENAME=github
+###### SETTINGS ##############
+KEY_NAME=github
+CONFIG_PATH=~/.ssh/
+CONFIG_FILE=$CONFIG_PATH/config
+###############################
 
-mkdir -p ~/.ssh
+mkdir -p $CONFIG_PATH
 
-ssh-keygen -t rsa -f ~/.ssh/$FILENAME -q -P ""
+ssh-keygen -t rsa -f ~/.ssh/$KEY_NAME -q -P ""
 
 echo "Host github.com
 	User git
-	IdentityFile ~/.ssh/$FILENAME
-" >> ~/.ssh/test
+	IdentityFile ~/.ssh/$KEY_NAME
+" >> $CONFIG_FILE
 
-chmod 600 ~/.ssh/config
+chmod 600 $CONFIG_FILE
 
-cat ~/.ssh/$FILENAME.pub
+cat ~/.ssh/$KEY_NAME.pub
