@@ -1,33 +1,38 @@
 #!/bin/bash
 
-echo "Installing homebrew"
-/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-clear
+read -p "This script will perform a number of upgrades and installs. When it's complete, your mac will be rebooted without further warning. Are you ready? " -n 1 -r
+echo    # (optional) move to a new line
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+  echo "Installing homebrew"
+  /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+  clear
 
-echo "Installing basics"
-brew install cask htop python ruby
-clear
+  echo "Installing basics"
+  brew install cask htop python ruby
+  clear
 
-echo "Installing/upgrading firefox, chrome, sublime and ccleanr"
-brew cask install --force firefox google-chrome sublime-text ccleaner
-clear
+  echo "Installing/upgrading firefox, chrome, sublime and ccleanr"
+  brew cask install --force firefox google-chrome sublime-text ccleaner
+  clear
 
-brew doctor
-clear
+  brew doctor
+  clear
 
-echo "Installing Oh My ZSH"
-curl -L http://install.ohmyz.sh | sh
-clear
+  echo "Installing Oh My ZSH"
+  curl -L http://install.ohmyz.sh | sh
+  clear
 
-source ~/.zshrc
+  source ~/.zshrc
 
-echo "Resetting pram"
-sudo nvram -c
-clear
+  echo "Resetting pram"
+  sudo nvram -c
+  clear
 
-echo "Resetting routing table"
-sudo route -n flush
-clear
+  echo "Resetting routing table"
+  sudo route -n flush
+  clear
 
-echo "Rebooting mac"
-sudo reboot
+  echo "Rebooting mac"
+  sudo reboot
+fi
