@@ -1,0 +1,33 @@
+#!/bin/bash
+
+echo "Installing homebrew"
+/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+clear
+
+echo "Installing basics"
+brew install cask htop python ruby
+clear
+
+echo "Installing/upgrading firefox, chrome, sublime and ccleanr"
+brew cask install --force firefox google-chrome sublime-text ccleaner
+clear
+
+brew doctor
+clear
+
+echo "Installing Oh My ZSH"
+curl -L http://install.ohmyz.sh | sh
+clear
+
+source ~/.zshrc
+
+echo "Resetting pram"
+sudo nvram -c
+clear
+
+echo "Resetting routing table"
+sudo route -n flush
+clear
+
+echo "Rebooting mac"
+sudo reboot
