@@ -1,0 +1,4 @@
+#!/bin/bash
+
+sudo apt-get -qy update
+sudo apt-get -y install mysql-server php7.3-mysql

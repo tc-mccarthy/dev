@@ -1,0 +1,8 @@
+#!/bin/bash
+
+curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
+sudo apt-get -qy update
+sudo apt-get -y install nodejs
+
+sudo npm install -g pm2
+sudo pm2 install log-rotate

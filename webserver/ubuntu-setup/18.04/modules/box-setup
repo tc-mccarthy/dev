@@ -1,0 +1,15 @@
+#!/bin/bash
+
+## set up basic dependencies
+sudo apt-get -yq update && sudo apt-get -yq upgrade
+sudo apt-get install -yq build-essential git htop iotop screen vim unzip pkg-config
+
+echo "What shall we name this server?"
+read hostname
+
+sudo bash -c "echo $hostname > /etc/hostname"
+sudo bash -c "echo '127.0.0.1 $hostname' >> /etc/hosts"
+
+sudo timedatectl set-ntp on
+sudo timedatectl set-timezone America/New_York
+sudo systemctl restart systemd-timesyncd

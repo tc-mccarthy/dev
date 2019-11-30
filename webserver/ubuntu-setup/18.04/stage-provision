@@ -1,0 +1,14 @@
+#!/bin/bash
+
+SCRIPTPATH="$( cd "$(dirname "$0")" ; pwd -P )"
+
+bash $SCRIPTPATH/modules/box-setup
+
+bash $SCRIPTPATH/modules/iptables-setup
+bash $SCRIPTPATH/modules/swap-setup
+
+bash $SCRIPTPATH/modules/nginx-setup
+bash $SCRIPTPATH/modules/node-setup
+bash $SCRIPTPATH/modules/mysql-setup
+bash $SCRIPTPATH/modules/memcached-setup
+bash $SCRIPTPATH/modules/php-setup
