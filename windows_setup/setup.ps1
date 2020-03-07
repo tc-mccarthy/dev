@@ -10,8 +10,8 @@ if ($PSVersionTable.PSVersion.Major -le 2)
   }
 
   echo "Upgrading PowerShell to 3+ and installing dependencies"
-  choco install -y --ignore-checksums dotnet4.7 powershell python3 googlechrome firefox sublimetext3 slack openssh nodejs ruby git curl atom avgantivirusfree malwarebytes
-  choco upgrade -y --ignore-checksums dotnet4.7 powershell python3 googlechrome firefox sublimetext3 slack openssh nodejs ruby git curl atom avgantivirusfree malwarebytes
+  choco install -y --ignore-checksums dotnet4.7 powershell python3 googlechrome firefox sublimetext3 slack openssh nodejs ruby git curl atom avgantivirusfree malwarebytes winrar
+  choco upgrade -y --ignore-checksums dotnet4.7 powershell python3 googlechrome firefox sublimetext3 slack openssh nodejs ruby git curl atom avgantivirusfree malwarebytes winrar
   shutdown -r -f -t 05 -c "Restarting... Run this script again after restart"
   Stop-Process -Id $PID
 }
@@ -28,8 +28,8 @@ set-executionpolicy remotesigned -s localmachine
 
 echo "Installing remaining dependencies"
 ## Install dependencies
-choco install -y --ignore-checksums powershell python3 googlechrome firefox sublimetext3 slack openssh nodejs ruby git curl atom avgantivirusfree malwarebytes
-choco upgrade -y --ignore-checksums powershell python3 googlechrome firefox sublimetext3 slack openssh nodejs ruby git curl atom avgantivirusfree malwarebytes
+choco install -y --ignore-checksums powershell python3 googlechrome firefox sublimetext3 slack openssh nodejs ruby git curl atom avgantivirusfree malwarebytes winrar
+choco upgrade -y --ignore-checksums powershell python3 googlechrome firefox sublimetext3 slack openssh nodejs ruby git curl atom avgantivirusfree malwarebytes winrar
 
 setx path "%PATH%;%LOCALAPPDATA%\Atom\bin"
 
