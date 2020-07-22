@@ -16,7 +16,7 @@ The initial set up is very quick. Once it's done kick off the GUI install by she
 
 It should autostart the process. If it doesn't, go ahead and do `bash /vagrant/provision`
 
-Get some tacos
+Get some tacos (after the prompt you have select 'yes' on)
 
 Once the process completes (the screen stops moving) do
 
