@@ -1,0 +1,11 @@
+#!/bin/bash
+
+#!/bin/bash
+curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
+
+sudo apt-get -yq update
+sudo apt-get -yq upgrade
+sudo apt-get -yq install git unzip nodejs curl mysql-server memcached ubuntu-desktop build-essential dkms linux-headers-$(uname -r)
+
+## set initial login script
+ln -sf /vagrant/initial_login /home/vagrant/.bash_login
