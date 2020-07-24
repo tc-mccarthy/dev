@@ -5,7 +5,7 @@ sudo sh -c 'echo "deb [arch=amd64] https://packagecloud.io/AtomEditor/atom/any/ 
 
 sudo apt-get -yq update
 
-sudo apt-get install -y atom
+sudo apt-get install -y atom build-essential dkms linux-headers-$(uname -r) virtualbox-guest-additions-iso virtualbox-guest-dkms virtualbox-guest-x11
 
 sudo npm i -g grunt grunt-cli pm2
 
