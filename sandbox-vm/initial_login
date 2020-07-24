@@ -9,4 +9,6 @@ sudo apt-get install -y atom
 
 sudo npm i -g grunt grunt-cli pm2
 
+sudo chown -R $(whoami):$(whoami) ~
+
 rm ~/.bash_login
