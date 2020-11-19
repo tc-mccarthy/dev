@@ -1,115 +1,125 @@
 module.exports = function (grunt) {
 
-	// Project configuration.
-	grunt.initConfig({
-		pkg: grunt.file.readJSON('package.json'),
+  const output_prefix = './';
 
-		uglify: {
-			files: {
-				src: ['js/*.js', '!js/*.min.js'], // source files mask
-				dest: 'js/', // destination folder
-				expand: true, // allow dynamic building
-				flatten: true, // remove all unnecessary nesting
-				ext: '.min.js' // replace .js to .min.js
-			}
-		},
+  // Project configuration.
+  grunt.initConfig({
+    pkg: grunt.file.readJSON('package.json'),
 
-		compass: {
-			dist: {
-				options: {
-					sassDir: 'assets/scss',
-					cssDir: 'css'
-				}
-			}
-		},
+    eslint: {
+      options: {
+        configFile: './eslint.json',
+        fix: true
+      },
+      target: ['assets/js/*.js', 'assets/js/**/*.js', 'assets/js/*.jsx', 'assets/js/**/*.jsx']
+    },
 
-		concat: {
-			dist: {
-				src: ['assets/js/*.js'],
-				dest: 'js/working/app.es6.js',
-			}
-		},
+    uglify: {
+      files: {
+        cwd: `${output_prefix}js`,
+        src: ['*.js', '**/*.js', '!*.min.js', '!**/*.min.js', '!**/*.es6.js', '!**/*.babel.js'], // source files mask
+        dest: `${output_prefix}js/`, // destination folder
+        expand: true, // allow dynamic building
+        ext: '.min.js' // replace .js to .min.js
+      }
+    },
 
-		babel: {
-			options: {
-				presets: [
-					["env", {
-						"targets": {
-							"browsers": ["last 2 versions", "safari >= 7"]
-						}
-					}]
-				]
-			},
-			dist: {
-				//dest - string: src - array
-				src: ["js/working/app.es6.js"],
-				dest: "js/working/app.babel.js"
-			}
-		},
+    compass: {
+      dist: {
+        options: {
+          sassDir: 'assets/scss',
+          cssDir: `${output_prefix}css`
+        }
+      }
+    },
 
-		browserify: {
-			dist: {
-				files: {
-					'js/app.js': ['js/working/app.babel.js']
-				}
-			}
-		},
-
-		cssmin: {
-			target: {
-				files: [{
-					expand: true,
-					cwd: 'css',
-					src: ['*.css', '!*.min.css'],
-					dest: 'css',
-					ext: '.min.css'
+    concat: {
+      dist: {
+        files: [{
+          src: ['assets/js/*.js'],
+          dest: `${output_prefix}js/working/app.es6.js`
 				}]
-			}
-		},
+      }
+    },
 
-		watch: {
-			js: {
-				files: ['assets/js/*.js', 'assets/js/*/*.js', 'Gruntfile.js'],
-				tasks: ['newer:jshint', 'newer:concat', 'babel', 'browserify', 'newer:uglify']
-			},
+    babel: {
+      options: {
+        sourceMap: false,
+        presets: ["@babel/preset-env", "@babel/preset-react"],
+        plugins: ["@babel/plugin-transform-modules-commonjs", "@babel/plugin-proposal-class-properties"]
+      },
+      react: {
+        files: [{
+          cwd: "assets/js",
+          src: ["*.jsx", "**/*.jsx", "*.js", "**/*.js", "!*.min.js", "!**/*.min.js"],
+          dest: `${output_prefix}js/working`,
+          expand: true // allow dynamic building
+								}]
+      },
+    },
 
-			css: {
-				files: '**/*.scss',
-				tasks: ['compass', 'cssmin']
-			}
-		},
+    browserify: {
+      react: {
+        files: [{
+          cwd: `${output_prefix}js/working`,
+          src: ["*.js", "**/*.js", "!*.min.js", "!**/*.min.js"],
+          dest: `${output_prefix}js`,
+          expand: true // allow dynamic building
+				}]
+      }
+    },
 
-		jshint: {
-			options: {
-				curly: true,
-				eqnull: true,
-				browser: true,
-				expr: true,
-				globals: {
-					jQuery: true,
-				},
-				sub: true,
-				esversion: 6
+    cssmin: {
+      target: {
+        files: [{
+          expand: true,
+          cwd: `${output_prefix}css`,
+          src: ['*.css', '!*.min.css'],
+          dest: `${output_prefix}css`,
+          ext: '.min.css'
+				}]
+      }
+    },
 
-			},
-			uses_defaults: ['assets/js/*.js', '!assets/js/__*.js', 'assets/js/*/*.js', '!assets/js/*/__*.js']
-		},
+    watch: {
+      js: {
+        files: ['assets/js/*.js', 'assets/js/**/*.js', 'Gruntfile.js'],
+        tasks: ['newer:eslint', 'babel', 'browserify']
+      },
+      jsx: {
+        files: ['assets/js/*.jsx', 'assets/js/**/*.jsx'],
+        tasks: ['newer:eslint', 'babel', 'browserify']
+      },
 
-		removelogging: {
-			dist: {
-				src: "js/app.js",
-				dest: "js/app.js",
-			}
-		}
-	});
+      css: {
+        files: '**/*.scss',
+        tasks: ['compass', 'cssmin']
+      }
+    },
 
-	// load plugins
-	// load plugins
-	require('load-grunt-tasks')(grunt, { scope: 'devDependencies' });
+    removelogging: {
+      dist: {
+        files: [{
+          cwd: `${output_prefix}js`,
+          src: ['*.js', '!*.min.js', '**/*.js', '!**/*.min.js', '*.jsx', '**/*.jsx'], // source files mask
+          dest: `${output_prefix}js/`, // destination folder
+          expand: true // allow dynamic building
+  			}]
+      },
+    },
 
-	// register at least this one task
-	// register at least this one task
-	grunt.registerTask('default', ['concat', 'babel', 'browserify', 'removelogging', 'uglify', 'compass', 'cssmin']);
-	grunt.registerTask('dev', ['jshint', 'concat', 'babel', 'browserify', 'uglify', 'compass', 'cssmin', 'watch']);
-	grunt.registerTask('des', ['compass', 'cssmin', 'watch:css']);
+    env: {
+      build: {
+        NODE_ENV: 'production'
+      }
+    }
+  });
+
+  // load plugins
+  require('load-grunt-tasks')(grunt, { scope: 'devDependencies' });
+
+  // register at least this one task
+  grunt.registerTask('default', ['env:build', 'babel', 'removelogging', 'browserify', 'uglify', 'compass', 'cssmin']);
+  grunt.registerTask('dev', ['eslint', 'babel', 'browserify', 'compass', 'cssmin', 'watch']);
+  grunt.registerTask('des', ['compass', 'cssmin', 'watch:css']);
 };
