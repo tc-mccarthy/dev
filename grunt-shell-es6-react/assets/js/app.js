@@ -1,37 +1,7 @@
-const app = {
-	ele: {},
-	init: function () {
-		//on DOM ready
-		$((e) => {
-			this.onReady(e);
-		});
+import React from 'react';
+import ReactDOM from 'react-dom';
+import Example from './components/example.jsx';
 
-		$(window).on({
-			scroll: (e) => { this.onScroll(e); },
-			resize: (e) => { this.onResize(e); },
-			load: (e) => { this.onLoad(e); }
-		});
-	},
+const container = document.querySelector("#myExampleElement");
 
-	onReady: function (e) {
-		this.binds();
-	},
-
-	onLoad: function (e) {
-
-	},
-
-	onScroll: function (e) {
-
-	},
-
-	onResize: function (e) {
-
-	},
-
-	binds: function () {
-
-	}
-};
-
-app.init();
+ReactDOM.render(<Example />, container);
