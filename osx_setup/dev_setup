@@ -4,7 +4,7 @@
 set -e
 
 echo "Installing Homebrew"
-ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 clear
 
 echo "Installing awscli, nodejs, python, ruby, cask, php-cs-fixer"
@@ -20,7 +20,7 @@ sudo npm install -g nodemon forever grunt grunt-cli
 clear
 
 echo "Install mysqlworkbench, google drive, dropbox, firefox, chrome, sublime text, atom, spotify, cyberduck, office and Grammarly"
-brew cask install --force mysqlworkbench firefox google-chrome google-backup-and-sync dropbox sublime-text atom grammarly spotify slack skype microsoft-office postman cyberduck adobe-creative-cloud
+brew install --cask --force mysqlworkbench firefox google-chrome google-backup-and-sync dropbox sublime-text atom grammarly spotify slack skype microsoft-office postman cyberduck adobe-creative-cloud
 clear
 
 brew doctor

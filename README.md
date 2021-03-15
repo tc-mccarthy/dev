@@ -12,6 +12,10 @@ This is a repository of scripts I use to set up dev computers and servers quickl
 * osx_setup/svnalises.md -- svn reconciliation aliases (Makes it easier to bulk delete/add/commit modifications, zsh and filesystem changes)
 * osx_setup/TC.terminal -- Classy-ass shell theme that goes nicely with zsh
 
+```
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/tc-mccarthy/dev/master/osx_setup/dev_setup)"
+```
+
 ## Coding/Dev
 * Gruntfile.js -- Sample Gruntfile that uses my most frequently used procedures
 * grunt-shell -- Sample file structure for grunt-powered projects
