@@ -21,8 +21,8 @@ sudo npm install -g nodemon forever grunt grunt-cli
 clear
 
 echo "Install mysqlworkbench, google drive, dropbox, firefox, chrome, sublime text, atom, spotify, cyberduck, office and Grammarly"
-brew install --cask --force mysqlworkbench firefox google-chrome google-backup-and-sync dropbox sublime-text atom grammarly spotify slack skype microsoft-office postman cyberduck adobe-creative-cloud visual-studio-code
-brew upgrade --cask --force mysqlworkbench firefox google-chrome google-backup-and-sync dropbox sublime-text atom grammarly spotify slack skype microsoft-office postman cyberduck adobe-creative-cloud visual-studio-code
+brew install --cask --force firefox google-chrome sublime-text atom postman cyberduck visual-studio-code
+brew upgrade --cask --force firefox google-chrome sublime-text atom postman cyberduck visual-studio-code
 clear
 
 brew doctor

@@ -1,0 +1,7 @@
+#!/bin/bash
+
+echo "export PATH=/usr/local/opt/ruby/bin:$PATH" >> ~/.bashrc
+
+source ~/.bashrc
+
+sudo gem install compass
