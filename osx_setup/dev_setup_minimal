@@ -1,12 +1,12 @@
 #!/bin/bash
 
 ## end setup on fail
-set -e
+# set -e
 
 echo "Installing Homebrew"
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-git -C /usr/local/Homebrew/Library/Taps/homebrew/homebrew-core fetch --unshallow
-git -C /usr/local/Homebrew/Library/Taps/homebrew/homebrew-cask fetch --unshallow
+# git -C /usr/local/Homebrew/Library/Taps/homebrew/homebrew-core fetch --unshallow
+# git -C /usr/local/Homebrew/Library/Taps/homebrew/homebrew-cask fetch --unshallow
 clear
 
 echo "Installing awscli, nodejs, python, ruby, cask, php-cs-fixer"
