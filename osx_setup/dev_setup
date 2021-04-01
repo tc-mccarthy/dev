@@ -14,7 +14,7 @@ brew install --force awscli nodejs python ruby cask php-cs-fixer
 brew upgrade --force awscli nodejs python ruby cask php-cs-fixer
 
 echo "Installing Compass"
-sudo gem install compass
+#sudo gem install compass
 clear
 
 
