@@ -1,0 +1,10 @@
+#!/bin/bash
+
+CURRENT_BRANCH=`git branch | grep '^*' | sed 's/* //'`
+
+git push -u origin $CURRENT_BRANCH
+git checkout stage
+git pull --no-edit
+git pull origin $CURRENT_BRANCH --no-edit
+git push
+git checkout $CURRENT_BRANCH
