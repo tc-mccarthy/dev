@@ -29,11 +29,6 @@ clear
 
 brew doctor
 
-echo "Setup atom extensions"
-apm install atom-beautify pigments less-than-slash seti-ui open-in-browsers minimap
-curl -fsSL https://raw.githubusercontent.com/tc-mccarthy/edu/master/configs/atom.cson > ~/.atom/config.cson
-pip3 install --upgrade sqlparse
-
 echo "Installing Oh My ZSH"
 curl -L http://install.ohmyz.sh | sh
 clear
